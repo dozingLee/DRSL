@@ -10,20 +10,21 @@ import numpy as np
 from custom_dataset import MyCustomDataset
 from torch.utils.data import DataLoader
 
+# # confirm whether the device supports cuda
 device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
 
 # # XMedia dataset
 # # class number: each sample of different modalities is classified in 200 independent classes
-# dataset_config = {
-#     'dataset_name': 'xmedianet_deep',
-#     'class_number': 200
-# }
+dataset_config = {
+    'dataset_name': 'xmedianet_deep',
+    'class_number': 200
+}
 
 # # Pascal dataset
-dataset_config = {
-    'dataset_name': 'pascal_deep',
-    'class_number': 5
-}
+# dataset_config = {
+#     'dataset_name': 'pascal_deep',
+#     'class_number': 5
+# }
 
 batch_size = {'train': 200, 'test': 200}
 

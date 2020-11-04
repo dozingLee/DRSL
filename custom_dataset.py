@@ -10,6 +10,8 @@ from sklearn.decomposition import PCA
 
 # # MyCustomDataset: get data
 class MyCustomDataset(Dataset):
+
+    # # __init__(): load data
     def __init__(self, dataset='wiki_shallow', state='train'):
 
         if dataset == 'pascal_deep':
@@ -84,10 +86,12 @@ class MyCustomDataset(Dataset):
         self.labels = torch.LongTensor(self.labels)
         self.labels = self.labels.view(-1, 1)
 
+    # # __getitem__(): return index item
     def __getitem__(self, index):
         I_item, T_item, label = self.I[index], self.T[index], self.labels[index]
         return I_item, T_item, label
 
+    # # __len__(): return how many items of this dataset
     def __len__(self):
         count = len(self.I)
         # print (len(self.I), len(self.T), len(self.labels))
