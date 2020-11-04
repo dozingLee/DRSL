@@ -8,6 +8,7 @@ import numpy as np
 from sklearn.decomposition import PCA
 
 
+# # MyCustomDataset: get data
 class MyCustomDataset(Dataset):
     def __init__(self, dataset='wiki_shallow', state='train'):
 
@@ -28,7 +29,6 @@ class MyCustomDataset(Dataset):
             test_img_lab = sio.loadmat(data_dir + 'test_img_lab.mat')
             labels_test = test_img_lab['test_img_lab']
 
-
         elif dataset == 'xmedianet_deep':
             data_dir = '/root/workspace/datasets/XMediaNet/my_extracted_feature/'
             train_img = sio.loadmat(data_dir + 'train_img.mat')
@@ -45,7 +45,6 @@ class MyCustomDataset(Dataset):
             labels_train = train_img_lab['train_img_lab']
             test_img_lab = sio.loadmat(data_dir + 'test_img_lab.mat')
             labels_test = test_img_lab['test_img_lab']
-
 
         elif dataset == 'nus_deep':
             data_dir = '/root/workspace/datasets/nus/my_extracted_feature/'
@@ -74,7 +73,7 @@ class MyCustomDataset(Dataset):
             self.T = T_test
             self.labels = labels_test
 
-        self.I = torch.FloatTensor(self.I)
+        self.I = torch.FloatTensor(self.I)  # FloatTensor(): covert dtype into torch.float32
 
         if dataset == 'wiki_deep' or dataset == 'pascal_deep' \
                 or dataset == 'xmedianet_deep' or dataset == 'nus_deep':

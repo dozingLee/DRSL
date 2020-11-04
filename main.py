@@ -3,32 +3,40 @@ import torch
 from model import Model
 import numpy as np
 
-
 # torch.manual_seed(torch_seed)
 # np.random.seed(np_seed)
-
 
 
 from custom_dataset import MyCustomDataset
 from torch.utils.data import DataLoader
 
-
-
 device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
-dataset_config = {
-    'dataset_name': 'xmedianet_deep',
-    'class_number': 200}
 
-batch_size = {'train':200, 'test':200}
+# # XMedia dataset
+# # class number: each sample of different modalities is classified in 200 independent classes
+# dataset_config = {
+#     'dataset_name': 'xmedianet_deep',
+#     'class_number': 200
+# }
+
+# # Pascal dataset
+dataset_config = {
+    'dataset_name': 'pascal_deep',
+    'class_number': 5
+}
+
+batch_size = {'train': 200, 'test': 200}
+
 dataset = {x: MyCustomDataset(dataset=dataset_config['dataset_name'], state=x)
            for x in ['train', 'test']}
-is_shuffle={'train': True, 'test': False}
+
+is_shuffle = {'train': True, 'test': False}
+
 dataloaders = {x: DataLoader(dataset[x], batch_size=batch_size[x],
                              shuffle=is_shuffle[x], num_workers=1)
                for x in ['train', 'test']}
 
 dataset_sizes = {x: len(dataset[x]) for x in ['train', 'test']}
-
 
 model = Model(
     input_dim_I=4096,
@@ -43,4 +51,5 @@ model = Model(
 model.to(device)
 
 import train
+
 model = train.train2(model, dataloaders, device, dataset_sizes, num_epochs=20, retreival=True)

@@ -2,6 +2,7 @@ import torch
 import numpy as np
 import torch.nn.functional as F
 
+
 # def pair_similarity(x, y):
 #     '''
 #     x: n * dx
@@ -19,10 +20,10 @@ import torch.nn.functional as F
 #     return ps
 
 def cdist(x, y):
-    '''
+    """
     x: n * dx
     y: m * dy
-    '''
+    """
 
     n = x.size(0)
     m = y.size(0)
@@ -33,11 +34,12 @@ def cdist(x, y):
     dist = torch.pow(x - y, 2).sum(2)
     return dist
 
+
 def pair_similarity(x, y):
-    '''
+    """
     x: n * dx
     y: m * dy
-    '''
+    """
 
     n = x.size(0)
     m = y.size(0)
@@ -45,11 +47,10 @@ def pair_similarity(x, y):
 
     x = x.unsqueeze(1).expand(n, m, d)
     y = y.unsqueeze(0).expand(n, m, d)
-    ps = torch.eq(x,y).squeeze(2)
+    ps = torch.eq(x, y).squeeze(2)
     return ps
 
 
 def relation_loss(relation_score, labelS):
     loss = torch.nn.MSELoss(reduction='none')(relation_score, labelS.float()).sum() / np.sqrt(labelS.size(0))
     return loss
-

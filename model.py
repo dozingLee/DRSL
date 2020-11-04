@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+
 class ImageDNN(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim):
         super(ImageDNN, self).__init__()
@@ -22,6 +23,7 @@ class ImageDNN(nn.Module):
         x = self.Sequential(x)
         return x
 
+
 class TextDNN(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim):
         super(TextDNN, self).__init__()
@@ -41,6 +43,7 @@ class TextDNN(nn.Module):
         # x = F.leaky_relu(self.fc2(x), 0.05)
         x = self.Sequential(x)
         return x
+
 
 class RelationDNN(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim):
@@ -101,7 +104,6 @@ class Model(nn.Module):
         y_I = y_I.unsqueeze(1).expand(ni, nt, di)
         y_I = y_I.reshape(-1, di)
 
-
         y_T = y_T.unsqueeze(0).expand(ni, nt, dt)
         y_T = y_T.reshape(-1, dt)
 
@@ -109,4 +111,4 @@ class Model(nn.Module):
         # y = y_I * y_T
 
         relation_score = self.RelationDNN(y)
-        return  relation_score
+        return relation_score

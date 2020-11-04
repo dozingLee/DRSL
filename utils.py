@@ -2,6 +2,7 @@ import sys
 import numpy as np
 from wxeval import wx_calc_map_label
 
+
 def show_progressbar(rate, *args, **kwargs):
     '''
     :param rate: [current, total]
@@ -13,7 +14,8 @@ def show_progressbar(rate, *args, **kwargs):
     rate[0] = int(np.around(rate[0] * float(bar_length) / rate[1])) if rate[1] > bar_length else rate[0]
     rate[1] = bar_length if rate[1] > bar_length else rate[1]
     num = len(str(count))
-    str_show = ('\r%' + str(num) + 'd / ' + '%' + str(num) + 'd  (%' + '3.2f%%) [') % (inx, count, float(inx) / count * 100)
+    str_show = ('\r%' + str(num) + 'd / ' + '%' + str(num) + 'd  (%' + '3.2f%%) [') % (
+    inx, count, float(inx) / count * 100)
     for i in range(rate[0]):
         str_show += '='
 
@@ -36,6 +38,7 @@ def show_progressbar(rate, *args, **kwargs):
 
     sys.stdout.write(str_show)
     sys.stdout.flush()
+
 
 def cal_map_bi(relation_score, labels):
     print('======================== Bi-modal Retrieval ==========================')

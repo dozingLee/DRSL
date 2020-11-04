@@ -6,11 +6,10 @@ import numpy as np
 # import scipy
 from numpy.matlib import repmat
 from loss import relation_loss
-
 from utils import show_progressbar, cal_map_bi
 
-# device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
 
+# device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
 
 def train2(model,
            dataloaders,
@@ -40,7 +39,7 @@ def train2(model,
         optimizer, step_size=1, gamma=0.98)
     xmedianet_loss_history = []
 
-    ## ======= Training  =======
+    # ======= Training  =======
     for epoch in range(num_epochs):
         # scheduler.step()
         print('Epoch {}/{}'.format(epoch + 1, num_epochs))
@@ -58,7 +57,7 @@ def train2(model,
                 model.train()  # Set model to training mode
 
             else:
-                model.eval()   # Set model to evaluate mode
+                model.eval()  # Set model to evaluate mode
 
             running_loss = 0.0
 
@@ -113,8 +112,7 @@ def train2(model,
     print('Training complete in {:.0f}m {:.0f}s'.format(
         time_elapsed // 60, time_elapsed % 60))
 
-
-    ## ======= Testing  =======
+    # ======= Testing  =======
 
     img_feas_list, text_feas_list, label_list = [], [], []
     for i, batch in enumerate(dataloaders['test']):
@@ -143,7 +141,7 @@ def train2(model,
     labels = np.concatenate(label_list, 0)
 
     if retreival is True:
-       cal_map_bi(-relation_score, labels)
+        cal_map_bi(-relation_score, labels)
     else:
         pass
     print()
@@ -166,11 +164,12 @@ def znorm(inMat):
         std_val[y[0], y[1]] = 1
     return (inMat - mean_val) / std_val
 
+
 def pair_similarity(x, y):
-    '''
+    """
     x: n * dx
     y: m * dy
-    '''
+    """
 
     n = x.size(0)
     m = y.size(0)
@@ -178,7 +177,7 @@ def pair_similarity(x, y):
 
     x = x.unsqueeze(1).expand(n, m, d)
     y = y.unsqueeze(0).expand(n, m, d)
-    ps = torch.eq(x,y).squeeze(2)
+    ps = torch.eq(x, y).squeeze(2)
     ps = ps.float()
     # ps -= (ps == 0.).float()
     return ps
